@@ -659,8 +659,20 @@ class SourceParser(object):
 
             angle.bounds = (0, 180)
 
+            par_parser = ParameterParser('deg_high', polarization_definition['deg_high'])
+
+            deg_high = par_parser.get_variable()
+
+            deg_high.bounds = (0, 100)
+
+            par_parser = ParameterParser('ebreak', polarization_definition['ebreak'])
+
+            ebreak = par_parser.get_variable()
+
+            ebreak.bounds = (100, 500)
+
             this_polarization = polarization.LinearPolarization(
-                angle=angle, degree=degree
+                angle=angle, degree=degree, deg_high=deg_high, ebreak=ebreak
             )
 
         elif (

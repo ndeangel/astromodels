@@ -77,11 +77,13 @@ class Polarization(Node):
 
 
 class LinearPolarization(Polarization):
-    def __init__(self, degree, angle):
+    def __init__(self, degree, deg_high, ebreak, angle):
         """
         Linear parameterization of polarization
 
-        :param degree: The polarization degree
+        :param degree: The polarization degree at low energy
+        :param deg_high: The polarization degree at high energy
+        :param ebreak: Energy break for the polarization degree
         :param angle: The polarization angle
         """
         super(LinearPolarization, self).__init__(polarization_type="linear")
@@ -99,8 +101,17 @@ class LinearPolarization(Polarization):
             angle, 0, 180, "angle", "Polarization angle", "deg"
         )
 
+        deg_high = self._get_parameter_from_input(
+            deg_high, 0, 100, 'deg_high', 'Polarization degree high energy', 'dimensionless_unscaled'
+        )
+
+        ebreak = self._get_parameter_from_input(ebreak, 100, 500, 'ebreak', 'Energy break', 'keV')
+
+
         self._add_child(degree)
         self._add_child(angle)
+        self._add_child(deg_high)
+        self._add_child(ebreak)
 
 
 class StokesPolarization(Polarization):
